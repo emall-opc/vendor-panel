@@ -48,7 +48,7 @@ export const MercurConnectModal = ({
             className="line-height-[20px] text-ui-fg-base"
             data-testid={`${testId}-title`}
           >
-            Mercur Connect Feature
+            Bizyul Connect Feature
           </Text>
           <Text
             size="small"

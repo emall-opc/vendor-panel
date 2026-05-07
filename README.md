@@ -3,7 +3,7 @@
 <div align="center">
   <h1> Vendor Panel
     <br> 
-for <a href="https://github.com/mercurjs/mercur">Mercur</a> - Open Source Marketplace Platform  </h1>
+for <a href="https://github.com/mercurjs/mercur">Bizyul</a> - Open Source Marketplace Platform  </h1>
   <!-- Shields.io Badges -->
   <a href="https://github.com/mercurjs/mercur/tree/main?tab=MIT-1-ov-file">
     <img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg" />
@@ -16,13 +16,13 @@ for <a href="https://github.com/mercurjs/mercur">Mercur</a> - Open Source Market
   </a>
   <!-- Website Links -->
   <p>
-  <a href="https://vendor.mercurjs.com/">🛍️ Vendor Panel Demo </a> · <a href="https://mercurjs.com/">Mercur Website</a> · <a href="https://docs.mercurjs.com/">📃 Explore the docs</a> 
+  <a href="https://vendor.mercurjs.com/">🛍️ Vendor Panel Demo </a> · <a href="https://mercurjs.com/">Bizyul Website</a> · <a href="https://docs.mercurjs.com/">📃 Explore the docs</a> 
   </p> 
 </div>
 
-## Vendor Panel for Mercur
+## Vendor Panel for Bizyul
 
-The Vendor Panel is a pivotal component of the MercurJS ecosystem, designed to provide vendors with an intuitive interface to oversee their marketplace activities. 
+The Vendor Panel is a pivotal component of the Bizyul ecosystem, designed to provide vendors with an intuitive interface to oversee their marketplace activities. 
 
 - Product Management: Add, edit, and organize products with ease.
 - Order Tracking: Monitor order statuses and manage fulfillment processes.
@@ -37,13 +37,13 @@ The Vendor Panel is a pivotal component of the MercurJS ecosystem, designed to p
 ![Vendor Store - Frontend View](https://cdn.prod.website-files.com/6790aeffc4b432ccaf1b56e5/68304b8674abb6fff86a2dbf_Cart%20and%20Vendor%20Page%20_%20Mercur%20B2C%20Storefront.png)
 
 
-# Part of Mercur
+# Part of Bizyul
 
-<a href="https://github.com/mercurjs/mercur">Mercur</a> is an open source marketplace platform that allows you to create high-quality experiences for shoppers and vendors while having the most popular Open Source commerce platform MedusaJS as a foundation.
+<a href="https://github.com/mercurjs/mercur">Bizyul</a> is an open source marketplace platform that allows you to create high-quality experiences for shoppers and vendors while having the most popular Open Source commerce platform Bizyul as a foundation.
 
-Mercur is a platform to start, customize, manage, and scale your marketplace for every business model with a modern technology stack.
+Bizyul is a platform to start, customize, manage, and scale your marketplace for every business model with a modern technology stack.
 
-![Mercur](https://cdn.prod.website-files.com/6790aeffc4b432ccaf1b56e5/67a1020f202572832c954ead_6b96703adfe74613f85133f83a19b1f0_Fleek%20Tilt%20-%20Readme.png)
+![Bizyul](https://cdn.prod.website-files.com/6790aeffc4b432ccaf1b56e5/67a1020f202572832c954ead_6b96703adfe74613f85133f83a19b1f0_Fleek%20Tilt%20-%20Readme.png)
 
 
 # Quickstart
