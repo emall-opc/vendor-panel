@@ -74,11 +74,7 @@ const Header = () => {
     <div className="grid w-full grid-cols-[24px_1fr_15px] items-center gap-x-3 bg-ui-bg-subtle p-0.5 p-3 pr-2">
       {fallback ? (
         <div className="h-7 w-7">
-          <ImageAvatar
-            src={seller?.photo || '/logo.svg'}
-            size={7}
-            rounded
-          />
+          <ImageAvatar src={seller?.photo || '/icon.png'} size={7} rounded />
         </div>
       ) : (
         <Skeleton className="h-6 w-6 rounded-md" />
