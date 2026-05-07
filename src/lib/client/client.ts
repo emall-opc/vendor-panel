@@ -2,17 +2,8 @@ import Medusa from '@medusajs/js-sdk';
 
 export const backendUrl = __BACKEND_URL__ ?? '/';
 export const publishableApiKey = __PUBLISHABLE_API_KEY__ ?? '';
-export const selectedSellerStorageKey = 'bizyul_selected_seller_id';
 
-const getAuthHeaders = () => {
-  const bearer = window.localStorage.getItem('medusa_auth_token') || '';
-  const sellerId = window.localStorage.getItem(selectedSellerStorageKey) || '';
-
-  return {
-    authorization: `Bearer ${bearer}`,
-    ...(sellerId ? { 'x-seller-id': sellerId } : {})
-  };
-};
+const token = window.localStorage.getItem('medusa_auth_token') || '';
 
 const decodeJwt = (token: string) => {
   try {
@@ -51,7 +42,7 @@ export const importProductsQuery = async (file: File) => {
     method: 'POST',
     body: formData,
     headers: {
-      ...getAuthHeaders(),
+      authorization: `Bearer ${token}`,
       'x-publishable-api-key': publishableApiKey
     }
   })
@@ -70,7 +61,7 @@ export const uploadFilesQuery = async (files: any[]) => {
     method: 'POST',
     body: formData,
     headers: {
-      ...getAuthHeaders(),
+      authorization: `Bearer ${token}`,
       'x-publishable-api-key': publishableApiKey
     }
   })
@@ -92,7 +83,7 @@ export const fetchQuery = async (
     headers?: { [key: string]: string };
   }
 ) => {
-  const authHeaders = getAuthHeaders();
+  const bearer = (await window.localStorage.getItem('medusa_auth_token')) || '';
   const params = Object.entries(query || {}).reduce((acc, [key, value]) => {
     if (value !== null && value !== undefined && value !== '') {
       if (Array.isArray(value)) {
@@ -117,7 +108,7 @@ export const fetchQuery = async (
   const response = await fetch(`${backendUrl}${url}${params && `?${params}`}`, {
     method: method,
     headers: {
-      ...authHeaders,
+      authorization: `Bearer ${bearer}`,
       'Content-Type': 'application/json',
       'x-publishable-api-key': publishableApiKey,
       ...headers
@@ -129,9 +120,8 @@ export const fetchQuery = async (
     const errorData = await response.json();
 
     if (response.status === 401) {
-      if (isTokenExpired(window.localStorage.getItem('medusa_auth_token'))) {
+      if (isTokenExpired(token)) {
         localStorage.removeItem('medusa_auth_token');
-        localStorage.removeItem(selectedSellerStorageKey);
         window.location.href = '/login?reason=Unauthorized';
         return;
       }

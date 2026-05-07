@@ -1,40 +1,7 @@
 import { FetchError } from "@medusajs/js-sdk"
 import { HttpTypes } from "@medusajs/types"
 import { UseMutationOptions, useMutation } from "@tanstack/react-query"
-import { fetchQuery, sdk, selectedSellerStorageKey } from "../../lib/client"
-
-type SellerMemberListResponse = {
-  seller_members?: Array<{
-    seller_id?: string
-    seller?: {
-      id?: string
-    }
-  }>
-}
-
-const syncDefaultSeller = async () => {
-  const response = (await fetchQuery("/vendor/sellers", {
-    method: "GET",
-  })) as SellerMemberListResponse
-
-  const sellerId =
-    response.seller_members?.[0]?.seller_id ||
-    response.seller_members?.[0]?.seller?.id
-
-  if (!sellerId) {
-    window.localStorage.removeItem(selectedSellerStorageKey)
-    return
-  }
-
-  window.localStorage.setItem(selectedSellerStorageKey, sellerId)
-
-  await fetchQuery("/vendor/sellers/select", {
-    method: "POST",
-    body: {
-      seller_id: sellerId,
-    },
-  })
-}
+import { fetchQuery, sdk } from "../../lib/client"
 
 export const useSignInWithEmailPass = (
   options?: UseMutationOptions<
@@ -47,12 +14,11 @@ export const useSignInWithEmailPass = (
   >
 ) => {
   return useMutation({
-    ...options,
-    mutationFn: (payload) => sdk.auth.login("member", "emailpass", payload),
+    mutationFn: (payload) => sdk.auth.login("seller", "emailpass", payload),
     onSuccess: async (data, variables, context) => {
-      await syncDefaultSeller()
       options?.onSuccess?.(data, variables, context)
     },
+    ...options,
   })
 }
 
@@ -67,22 +33,21 @@ export const useSignUpWithEmailPass = (
   >
 ) => {
   return useMutation({
-    ...options,
-    mutationFn: (payload) => sdk.auth.register("member", "emailpass", payload),
-    onSuccess: async (data, variables, context) => {
+    mutationFn: (payload) => sdk.auth.register("seller", "emailpass", payload),
+    onSuccess: async (_, variables) => {
       const seller = {
         name: variables.name,
-        email: variables.email,
-        member_email: variables.email,
-        currency_code: "usd",
+        member: {
+          name: variables.name,
+          email: variables.email,
+        },
       }
       await fetchQuery("/vendor/sellers", {
         method: "POST",
         body: seller,
       })
-      await syncDefaultSeller()
-      options?.onSuccess?.(data, variables, context)
     },
+    ...options,
   })
 }
 
@@ -94,8 +59,8 @@ export const useSignUpForInvite = (
   >
 ) => {
   return useMutation({
+    mutationFn: (payload) => sdk.auth.register("seller", "emailpass", payload),
     ...options,
-    mutationFn: (payload) => sdk.auth.register("member", "emailpass", payload),
   })
 }
 
@@ -103,25 +68,21 @@ export const useResetPasswordForEmailPass = (
   options?: UseMutationOptions<void, FetchError, { email: string }>
 ) => {
   return useMutation({
-    ...options,
     mutationFn: (payload) =>
-      sdk.auth.resetPassword("member", "emailpass", {
+      sdk.auth.resetPassword("seller", "emailpass", {
         identifier: payload.email,
       }),
     onSuccess: async (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },
+    ...options,
   })
 }
 
 export const useLogout = (options?: UseMutationOptions<void, FetchError>) => {
   return useMutation({
-    ...options,
     mutationFn: () => sdk.auth.logout(),
-    onSuccess: async (data, variables, context) => {
-      window.localStorage.removeItem(selectedSellerStorageKey)
-      options?.onSuccess?.(data, variables, context)
-    },
+    ...options,
   })
 }
 
@@ -130,11 +91,11 @@ export const useUpdateProviderForEmailPass = (
   options?: UseMutationOptions<void, FetchError, { password: string }>
 ) => {
   return useMutation({
-    ...options,
     mutationFn: (payload) =>
-      sdk.auth.updateProvider("member", "emailpass", payload, token),
+      sdk.auth.updateProvider("seller", "emailpass", payload, token),
     onSuccess: async (data, variables, context) => {
       options?.onSuccess?.(data, variables, context)
     },
+    ...options,
   })
 }
